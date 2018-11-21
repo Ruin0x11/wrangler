@@ -17,6 +17,7 @@ use rocket::State;
 use std::collections::HashMap;
 use util::result;
 use std::boxed::Box;
+use std::path::Path;
 
 #[derive(Deserialize)]
 struct Sound {
@@ -46,6 +47,12 @@ fn load_sounds() -> result::Result<HashMap<String, String>> {
         for (k, v) in table.iter() {
             let name = k.clone();
             let file = v.as_str().unwrap().to_string();
+            {
+                let it = Path::new(&file);
+                if !it.exists() {
+                    panic!("No sound! {} {}", name, file)
+                }
+            }
             println!("Load the sound! {} {}", name, file);
             sounds.insert(name, file);
         }

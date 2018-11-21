@@ -49,6 +49,6 @@ impl SoundCache {
         }
 
         let sound = self.cache.get(path).unwrap();
-        rodio::play_raw(&self.endpoint, sound.to_buffer().amplify(0.2));
+        rodio::play_raw(&self.endpoint, sound.to_buffer().amplify(1.0));
     }
 }
